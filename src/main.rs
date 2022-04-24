@@ -107,6 +107,9 @@ pub struct Cook {
     /// Cook using `#[no_std]` configuration  (does not affect `proc-macro` crates)
     #[clap(long)]
     no_std: bool,
+    /// pass -Zbuild-std to cargo
+    #[clap(long)]
+    build_std: bool,
 }
 
 fn _main() -> Result<(), anyhow::Error> {
@@ -136,6 +139,7 @@ fn _main() -> Result<(), anyhow::Error> {
             workspace,
             offline,
             no_std,
+            build_std,
         }) => {
             if atty::is(atty::Stream::Stdout) {
                 eprintln!("WARNING stdout appears to be a terminal.");
@@ -201,6 +205,7 @@ fn _main() -> Result<(), anyhow::Error> {
                     workspace,
                     offline,
                     no_std,
+                    build_std,
                 })
                 .context("Failed to cook recipe.")?;
         }

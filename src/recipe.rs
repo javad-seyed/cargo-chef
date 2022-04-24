@@ -30,6 +30,7 @@ pub struct CookArgs {
     pub workspace: bool,
     pub offline: bool,
     pub no_std: bool,
+    pub build_std: bool,
 }
 
 impl Recipe {
@@ -80,6 +81,7 @@ fn build_dependencies(args: &CookArgs) {
         package,
         workspace,
         offline,
+        build_std,
         ..
     } = args;
     let mut command = Command::new("cargo");
@@ -128,6 +130,10 @@ fn build_dependencies(args: &CookArgs) {
     if *offline {
         command_with_args.arg("--offline");
     }
+    if *build_std {
+        command_with_args.arg("-Zbuild-std");
+    }
+
 
     execute_command(command_with_args);
 }
